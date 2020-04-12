@@ -1,22 +1,13 @@
 <?php
 
-namespace Tests\Feature;
+namespace Neliserp\Core\Tests\Feature;
 
-use Orchestra\Testbench\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
+use Neliserp\Core\CrudTest;
 use Neliserp\Core\CoreServiceProvider;
 use Neliserp\Core\Permission;
 
-class PermissionTest extends TestCase
+class PermissionTest extends CrudTest
 {
-    use RefreshDatabase;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     protected function getPackageProviders($app)
     {
         return [

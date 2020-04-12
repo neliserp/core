@@ -2,9 +2,9 @@
 
 namespace Neliserp\Core\Http\Controllers;
 
+use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 
 abstract class CrudController extends Controller
@@ -60,7 +60,7 @@ abstract class CrudController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  $id
+     * @param  int  $id
      * @return Illuminate\Http\Resources\Json\JsonResource
      */
     public function show($id)
@@ -88,7 +88,7 @@ abstract class CrudController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  $id
+     * @param  int  $id
      * @return Illuminate\Http\Resources\Json\JsonResource
      */
     public function update(Request $request, $id)
@@ -103,7 +103,7 @@ abstract class CrudController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -114,6 +114,11 @@ abstract class CrudController extends Controller
         return response(null, 200);
     }
 
+    /**
+     * Init class properties.
+     *
+     * @return void
+     */
     protected function initClassProperties()
     {
         $reflection = new \ReflectionClass($this);
@@ -129,11 +134,17 @@ abstract class CrudController extends Controller
         $this->resource = "{$package_name}\\Http\\Resources\\{$model_name}Resource";
     }
 
+    /**
+     * Validate using the form request
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
     protected function validate(Request $request)
     {
         return $validator = Validator::make(
             $request->all(),
-            (new $this->request($request->all()))->rules()
+            (new $this->request())->rules()
         )->validate();
     }
 }
