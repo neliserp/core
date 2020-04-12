@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([
     'prefix' => 'api',
-    'namespace' => 'Neliserp\Core',
+    'namespace' => 'Neliserp\Core\Http\Controllers',
 ], function() {
-
+    Route::resource('permissions', 'PermissionController')->except(['create', 'edit']);
+    Route::resource('roles', 'RoleController')->except(['create', 'edit']);
+    Route::resource('users', 'UserController')->except(['create', 'edit']);
 });
