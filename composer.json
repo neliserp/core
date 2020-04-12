@@ -18,7 +18,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Neliserp\\Core\\Tests\\": "tests/"
+            "Tests\\": "tests/"
         }
     },
     "extra": {
@@ -27,5 +27,7 @@
                 "Neliserp\\Core\\CoreServiceProvider"
             ]
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

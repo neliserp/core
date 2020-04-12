@@ -1,6 +1,6 @@
 <?php
 
-namespace Neliserp\Core\Tests;
+namespace Tests\Feature;
 
 use Orchestra\Testbench\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
