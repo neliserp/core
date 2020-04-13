@@ -265,7 +265,7 @@ abstract class CrudTest extends TestCase
     protected function initClassProperties()
     {
         $reflection = new \ReflectionClass($this);
-        $namespace_name = $reflection->getNamespaceName();  // Neliserp\Core\Http\Controllers
+        $namespace_name = $reflection->getNamespaceName();  // Neliserp\Core\Tests\Feature
         $short_class_name = $reflection->getShortName();
 
         $package_name = str_replace('\Tests\Feature', '', $namespace_name);
