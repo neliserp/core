@@ -4,21 +4,15 @@ namespace Neliserp\Core\Filters;
 
 class UserFilter extends Filter
 {
-    protected function code($code)
+    protected function username($username)
     {
-        return $this->builder->where('code', 'LIKE', "%{$code}%");
-    }
-
-    protected function name($name)
-    {
-        return $this->builder->where('name', 'LIKE', "%{$name}%");
+        return $this->builder->where('username', 'LIKE', "%{$username}%");
     }
 
     protected function q($q)
     {
         return $this->builder->where(function ($query) use ($q) {
-            $query->where('code', 'LIKE', "%{$q}%")
-                ->orWhere('name', 'LIKE', "%{$q}%");
+            $query->where('username', 'LIKE', "%{$q}%");
         });
     }
 }

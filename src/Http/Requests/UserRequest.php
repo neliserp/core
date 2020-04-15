@@ -27,11 +27,18 @@ class UserRequest extends FormRequest
         $id = request()->route('user');
 
         return [
-            'code' => [
+            'username' => [
                 'required',
                 Rule::unique('users')->ignore($id ? $id : null),
             ],
-            'name' => 'required',
+            'password' => 'required',
+            'is_active' => 'required',
+            'email' => 'nullable',
+            'firstname' => 'nullable',
+            'lastname' => 'nullable',
+            'position' => 'nullable',
+            'mobile' => 'nullable',
+            'code' => 'nullable',
         ];
     }
 }

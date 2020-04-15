@@ -9,5 +9,5 @@ class UserTest extends CoreCrudTest
      *
      * @var array
      */
-    protected $q_fields = ['code', 'name'];
+    protected $q_fields = ['username'];
 }
