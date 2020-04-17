@@ -17,12 +17,6 @@ class LoginTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
-        // TODO: move into config file
-        config()->set('auth.providers.users', [
-            'driver' => 'eloquent',
-            'model' => 'Neliserp\Core\User',
-        ]);
     }
 
     /** @test */
@@ -49,7 +43,7 @@ class LoginTest extends TestCase
     }
 
     /** @test */
-    public function login_requires_valid_username_and_password()
+    public function login_with_invalid_username_and_incorrect_password()
     {
         $data = [
             'username' => 'invalid',
@@ -69,7 +63,32 @@ class LoginTest extends TestCase
     }
 
     /** @test */
-    public function inactive_user_cannot_login_even_with_valid_username_and_password()
+    public function login_with_valid_username_but_incorrect_password()
+    {
+        $user = factory(User::class)->create([
+            'username' => 'user',
+            'password' => bcrypt('secret'),
+        ]);
+
+        $data = [
+            'username' => 'user',
+            'password' => 'invalid',
+        ];
+
+        $this->json('POST', '/api/login', $data)
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'username' => [
+                        'These credentials do not match our records.',
+                    ],
+                ],
+            ]);
+    }
+
+    /** @test */
+    public function login_with_valid_username_and_password_but_inactive()
     {
         $data = [
             'username' => 'user',
@@ -95,10 +114,8 @@ class LoginTest extends TestCase
     }
 
     /** @test */
-    public function user_can_login_with_valid_username_and_password()
+    public function login_with_valid_username_and_password_and_active()
     {
-        $this->withoutExceptionHandling();
-
         $data = [
             'username' => 'user',
             'password' => 'secret',
@@ -110,6 +127,6 @@ class LoginTest extends TestCase
         ]);
 
         $this->json('POST', '/api/login', $data)
-            ->assertStatus(200);
+            ->assertStatus(204);
     }
 }

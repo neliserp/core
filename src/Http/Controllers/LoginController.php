@@ -6,7 +6,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -39,17 +38,6 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        if ($this->attempt($request)) {
-            return $this->sendLoginResponse($request);
-        }
-
-        $this->incrementLoginAttempts($request);
-
-        return $this->sendFailedLoginResponse($request);
-    }
-
-    protected function attempt($request)
-    {
         $user = User::where('username', $request->username)->first();
 
         if (! $user) {
@@ -57,12 +45,15 @@ class LoginController extends Controller
         }
 
         if (! $user->is_active) {
-            throw ValidationException::withMessages([
-                $this->username() => ['Temporarily disable user account.'],
-            ]);
+            return $this->sendFailedLoginResponse($request, 'Temporarily disable user account.');
         }
 
-        return $user && Hash::check($request->password, $user->password);
+        if (! Hash::check($request->password, $user->password)) {
+            // TODO: log number of failed attempts.
+            return $this->sendFailedLoginResponse($request);
+        }
+
+        return $this->sendLoginResponse($request);
     }
 
     protected function sendLoginResponse(Request $request)
@@ -71,19 +62,23 @@ class LoginController extends Controller
 
         $this->clearLoginAttempts($request);
 
-        if ($response = $this->authenticated($request, $this->guard()->user())) {
-            return $response;
-        }
+        //if ($response = $this->authenticated($request, $this->guard()->user())) {
+        //    return $response;
+        //}
 
         return $request->wantsJson()
-                    ? new Response('', 200)
+                    ? new Response('', 204)
                     : redirect()->intended($this->redirectPath());
     }
 
-    protected function sendFailedLoginResponse(Request $request)
+    protected function sendFailedLoginResponse(Request $request, $message = '')
     {
+        $this->incrementLoginAttempts($request);
+
         throw ValidationException::withMessages([
-            $this->username() => [trans('auth.failed')],
+            'username' => [
+                $message ?: trans('auth.failed')
+            ],
         ]);
     }
 }
