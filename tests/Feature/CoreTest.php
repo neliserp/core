@@ -2,10 +2,9 @@
 
 namespace Neliserp\Core\Tests\Feature;
 
-use Neliserp\Core\Tests\CrudTest;
 use Neliserp\Core\CoreServiceProvider;
 
-abstract class CoreCrudTest extends CrudTest
+trait CoreTest
 {
     /**
      * Get package providers.

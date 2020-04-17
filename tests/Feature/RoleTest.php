@@ -4,11 +4,14 @@ namespace Neliserp\Core\Tests\Feature;
 
 use Illuminate\Database\Eloquent\Collection;
 
+use Neliserp\Core\Tests\CrudTest;
 use Neliserp\Core\Role;
 use Neliserp\Core\Permission;
 
-class RoleTest extends CoreCrudTest
+class RoleTest extends CrudTest
 {
+    use CoreTest;
+
     /**
      * Search 'q' fields
      *
