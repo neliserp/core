@@ -31,7 +31,7 @@ class UserRequest extends FormRequest
                 'required',
                 Rule::unique('users')->ignore($id ? $id : null),
             ],
-            'password' => 'required',
+            'password' => request()->method() == 'POST' ? 'required' : 'nullable',
             'is_active' => 'required',
             'email' => 'nullable',
             'firstname' => 'nullable',

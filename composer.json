@@ -3,8 +3,7 @@
     "description": "Core package.",
     "license": "MIT",
     "require": {
-        "illuminate/support": "^7.4",
-        "laravel/ui": "^2.0"
+        "illuminate/support": "^7.4"
     },
     "require-dev": {
         "orchestra/testbench": "^5.1"
