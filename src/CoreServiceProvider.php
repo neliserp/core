@@ -17,6 +17,8 @@ class CoreServiceProvider extends ServiceProvider
 
     public function register()
     {
-        //
+        config([
+            'auth.providers.users.model' => User::class,
+        ]);
     }
 }

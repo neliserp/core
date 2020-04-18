@@ -17,8 +17,6 @@ class LoginTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->markTestIncomplete();
     }
 
     /** @test */

@@ -6,7 +6,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 use Neliserp\Core\User;
@@ -48,23 +47,25 @@ class LoginController extends Controller
             return $this->sendFailedLoginResponse($request, 'Temporarily disable user account.');
         }
 
-        if (! Hash::check($request->password, $user->password)) {
-            // TODO: log number of failed attempts.
-            return $this->sendFailedLoginResponse($request);
+        if ($this->attemptLogin($request)) {
+            return $this->sendLoginResponse($request);
         }
 
-        return $this->sendLoginResponse($request);
+        // TODO: log number of failed attempts.
+        return $this->sendFailedLoginResponse($request);
     }
 
     protected function sendLoginResponse(Request $request)
     {
-        //$request->session()->regenerate();
+        if ($request->hasSession()) {
+            $request->session()->regenerate();
+        }
 
         $this->clearLoginAttempts($request);
 
-        //if ($response = $this->authenticated($request, $this->guard()->user())) {
-        //    return $response;
-        //}
+        if ($response = $this->authenticated($request, $this->guard()->user())) {
+            return $response;
+        }
 
         return $request->wantsJson()
                     ? new Response('', 204)
