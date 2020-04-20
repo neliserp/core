@@ -33,8 +33,7 @@ class HasPermission
         //    abort(403, "Unauthorized action. HasPermission has no method '{$policy_method}'");
         //}
 
-        //if (! $policy->$policy_method(auth()->user())) {
-        if (! $policy->$policy_method()) {
+        if (! $policy->$policy_method(auth()->user())) {
             abort(403, "Unauthorized action. HasPermission has no permission '{$policy_method}'");
         }
 
