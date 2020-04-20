@@ -4,6 +4,7 @@ namespace Neliserp\Core\Tests;
 
 use Orchestra\Testbench\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -12,6 +13,7 @@ use Illuminate\Support\Str;
 abstract class CrudTest extends TestCase
 {
     use RefreshDatabase;
+    use WithoutMiddleware;
 
     /**
      * Model class name.
