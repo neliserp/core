@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Neliserp\Core\User;
 use Neliserp\Core\Permission;
 use Neliserp\Core\Role;
+use Neliserp\Core\Tests\CoreTest;
 
 class LoginTest extends TestCase
 {

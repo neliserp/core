@@ -271,7 +271,7 @@ abstract class CrudTest extends TestCase
         $short_class_name = $reflection->getShortName();
 
         $package_name = str_replace('\Tests\Feature', '', $namespace_name);
-        $model_name = str_replace('Test', '', $short_class_name);
+        $model_name = str_replace(['Test', 'Crud'], '', $short_class_name);
 
         $this->model = "{$package_name}\\{$model_name}";
         $this->table = Str::of($model_name)->plural()->lower();

@@ -1,6 +1,6 @@
 <?php
 
-namespace Neliserp\Core\Tests\Feature;
+namespace Neliserp\Core\Tests;
 
 use Neliserp\Core\CoreServiceProvider;
 

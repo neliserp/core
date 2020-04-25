@@ -1,24 +1,20 @@
 <?php
 
-namespace Neliserp\Core\Tests\Feature;
+namespace Neliserp\Core\Tests\Unit;
 
+use Orchestra\Testbench\TestCase;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-use Neliserp\Core\Tests\CrudTest;
 use Neliserp\Core\User;
 use Neliserp\Core\Role;
 use Neliserp\Core\Permission;
+use Neliserp\Core\Tests\CoreTest;
 
-class UserTest extends CrudTest
+class UserTest extends TestCase
 {
     use CoreTest;
-
-    /**
-     * Search 'q' fields
-     *
-     * @var array
-     */
-    protected $q_fields = ['username'];
+    use RefreshDatabase;
 
     /** @test */
     public function user_has_roles()
